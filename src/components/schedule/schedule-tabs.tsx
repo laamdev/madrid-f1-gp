@@ -11,8 +11,8 @@ export const ScheduleTabs = () => {
   const getTabStyles = (tabCompetition: string) => {
     return `relative w-24 rounded-xl aspect-square cursor-pointer transition-all duration-200 ${
       competition === tabCompetition
-        ? "bg-card ring-2 ring-primary"
-        : "bg-neutral-100 hover:bg-neutral-200"
+        ? "bg-white ring-2 ring-primary"
+        : "hover:bg-neutral-200"
     }`;
   };
 

@@ -10,28 +10,31 @@ import { RaceEvent } from "@/sanity/types";
 
 const formatEventTime = (startTime: string, endTime?: string) => {
   const start = new Date(startTime);
-  const dateStr = start.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "long",
-  });
+  const day = start.getDate();
+  const month = start
+    .toLocaleDateString("en-GB", {
+      month: "short",
+    })
+    .toUpperCase();
 
   const timeStr = start.toLocaleTimeString("en-GB", {
     hour: "2-digit",
     minute: "2-digit",
-    hour12: true,
+    hour12: false,
   });
 
-  if (!endTime) return { dateStr, timeStr };
+  if (!endTime) return { day, month, timeStr };
 
   const end = new Date(endTime);
   const endTimeStr = end.toLocaleTimeString("en-GB", {
     hour: "2-digit",
     minute: "2-digit",
-    hour12: true,
+    hour12: false,
   });
 
   return {
-    dateStr,
+    day,
+    month,
     timeStr: `${timeStr} - ${endTimeStr}`,
   };
 };
@@ -61,26 +64,34 @@ export default async function SchedulePage({
   return (
     <div>
       <Hero heading="Racing Schedule" image="/images/schedule-cover.webp" />
-      <div className="my-16">
+      <div className="mt-4 bg-neutral-100 p-8 rounded-xl">
         <div className="flex gap-4">
           <ScheduleTabs />
           <div className="flex-1">
             {filteredEvents.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {filteredEvents.map((event: RaceEvent, idx: number) => {
-                  const { dateStr, timeStr } = formatEventTime(
+                  const { day, month, timeStr } = formatEventTime(
                     event.startTime!,
                     event.hasEndTime ? event.endTime : undefined
                   );
 
                   return (
-                    <div key={idx} className="p-4 bg-neutral-200 rounded-xl">
-                      <h3 className="uppercase text-red-600 font-semibold">
-                        {event.name?.split("-").join(" ")}
-                      </h3>
-                      <div className="mt-2">
-                        <p className="text-sm text-neutral-600">{dateStr}</p>
-                        <p className="font-medium">{timeStr}</p>
+                    <div
+                      key={idx}
+                      className="flex items-start gap-6 p-4 bg-white rounded-xl"
+                    >
+                      <div className="text-center border-r-2 pr-4">
+                        <div className="text-2xl font-bold">{day}</div>
+                        <div className="text-neutral-500 text-sm font-sans">
+                          {month}
+                        </div>
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-sm font-bold uppercase font-mono text-red-600">
+                          {event.name?.split("-").join(" ")}
+                        </h3>
+                        <p className="text-serif">{timeStr}</p>
                       </div>
                     </div>
                   );
