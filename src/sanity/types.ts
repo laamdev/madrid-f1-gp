@@ -177,6 +177,7 @@ export type GpDetails = {
   racingSchedule?: Array<{
     _key: string;
   } & RaceEvent>;
+  seo?: Seo;
 };
 
 export type Redirect = {
@@ -1107,7 +1108,7 @@ export type SITEMAP_QUERYResult = Array<{
   _updatedAt: string;
 }>;
 // Variable: GP_DETAILS_QUERY
-// Query: *[_id == "gpDetails"][0]{  _id,  name,  location,  raceDate,  track,  racingSchedule[]}
+// Query: *[_id == "gpDetails"][0]{  _id,  name,  location,  raceDate,  track,  racingSchedule[],  seo}
 export type GP_DETAILS_QUERYResult = {
   _id: string;
   name: null;
@@ -1115,6 +1116,15 @@ export type GP_DETAILS_QUERYResult = {
   raceDate: null;
   track: null;
   racingSchedule: null;
+  seo: null;
+} | {
+  _id: string;
+  name: null;
+  location: null;
+  raceDate: null;
+  track: null;
+  racingSchedule: null;
+  seo: Seo | null;
 } | {
   _id: string;
   name: string | null;
@@ -1122,6 +1132,15 @@ export type GP_DETAILS_QUERYResult = {
   raceDate: null;
   track: null;
   racingSchedule: null;
+  seo: null;
+} | {
+  _id: string;
+  name: string | null;
+  location: null;
+  raceDate: null;
+  track: null;
+  racingSchedule: null;
+  seo: Seo | null;
 } | {
   _id: string;
   name: string | null;
@@ -1137,6 +1156,7 @@ export type GP_DETAILS_QUERYResult = {
   racingSchedule: Array<{
     _key: string;
   } & RaceEvent> | null;
+  seo: Seo | null;
 } | null;
 // Variable: EVENTS_QUERY
 // Query: *[  _type == "event"  && eventType == "in-person"  && date > now()]{  name,  headline->{    name  },   "isUpcoming": true}
@@ -1154,7 +1174,7 @@ declare module "@sanity/client" {
     "\n  *[_type == \"redirect\" && isEnabled == true] {\n      source,\n      destination,\n      permanent\n  }\n": REDIRECTS_QUERYResult;
     "\n  *[_id == $id][0]{\n    title,\n    \"image\": mainImage {\n      asset->,\n      hotspot,\n      crop\n    }\n  }    \n": OG_IMAGE_QUERYResult;
     "\n  *[_type in [\"page\", \"post\"] && defined(slug.current)] {\n      \"href\": select(\n        _type == \"page\" => \"/\" + slug.current,\n        _type == \"post\" => \"/posts/\" + slug.current,\n        slug.current\n      ),\n      _updatedAt\n  }\n  ": SITEMAP_QUERYResult;
-    "*[_id == \"gpDetails\"][0]{\n  _id,\n  name,\n  location,\n  raceDate,\n  track,\n  racingSchedule[]\n}": GP_DETAILS_QUERYResult;
+    "*[_id == \"gpDetails\"][0]{\n  _id,\n  name,\n  location,\n  raceDate,\n  track,\n  racingSchedule[],\n  seo\n}": GP_DETAILS_QUERYResult;
     "*[\n  _type == \"event\"\n  && eventType == \"in-person\"\n  && date > now()\n]{\n  name,\n  headline->{\n    name\n  }, \n  \"isUpcoming\": true\n}": EVENTS_QUERYResult;
   }
 }

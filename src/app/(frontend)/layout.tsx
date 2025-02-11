@@ -15,12 +15,10 @@ export async function generateMetadata(): Promise<Metadata> {
     query: GP_DETAILS_QUERY,
   });
 
-  console.log(gpDetails);
-
   return {
     title: {
-      template: `%s | ${gpDetails?.seo?.title || "2026 F1 Spanish Grand Prix"}`,
-      default: `Welcome back to F1 in Madrid | ${gpDetails?.seo?.title || "2026 F1 Spanish Grand Prix"}`,
+      template: `${gpDetails?.seo?.title || "2026 F1 Spanish Grand Prix"} | %s`,
+      default: `${gpDetails?.seo?.title || "IFEMA Madrid Circuit"} | 2026 F1 Spanish Grand Prix`,
     },
     openGraph: {
       title: `${gpDetails?.seo?.title || "2026 F1 Spanish Grand Prix"}`,

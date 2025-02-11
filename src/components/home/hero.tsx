@@ -33,7 +33,7 @@ export const HomeHero = ({
   const dateRange = `${formatDate(firstDay)} - ${formatDate(lastDay)} ${formatMonth(firstDay)}`;
 
   return (
-    <section className="rounded-xl overflow-hidden mt-4">
+    <section className="rounded-xl overflow-hidden">
       <div className="relative min-h-[32rem] overflow-hidden">
         <div className="absolute inset-0">
           <Image
