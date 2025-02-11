@@ -1,18 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { Author } from "@/components/blog/author";
-import { Categories } from "@/components/blog/categories";
-import { POSTS_QUERYResult } from "@/sanity/types";
-import { PublishedAt } from "@/components/blog/published-at";
+import { Author } from "@/components/news/author";
+import { Categories } from "@/components/news/categories";
+import { PublishedAt } from "@/components/news/published-at";
+
+import { ARTICLE_QUERYResult } from "@/sanity/types";
 
 import { urlFor } from "@/sanity/lib/image";
 
-export const PostCard = (props: POSTS_QUERYResult[0]) => {
+export const ArticleCard = (props: ARTICLE_QUERYResult[0]) => {
   const { title, author, mainImage, publishedAt, categories } = props;
 
   return (
-    <Link className="group" href={`/posts/${props.slug!.current}`}>
+    <Link className="group" href={`/news/${props.slug!.current}`}>
       <article className="flex flex-col-reverse gap-4 md:grid md:grid-cols-12 md:gap-0">
         <div className="md:col-span-2 md:pt-1">
           <Categories categories={categories} />

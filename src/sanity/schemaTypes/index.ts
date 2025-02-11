@@ -3,14 +3,15 @@ import { type SchemaTypeDefinition } from "sanity";
 import { pageBuilderType } from "./pageBuilderType";
 //Documents
 import { categoryType } from "./documents/categoryType";
-import { postType } from "./documents/postType";
+import { articleType } from "./documents/articleType";
 import { authorType } from "./documents/authorType";
 import { pageType } from "./documents/pageType";
 import { faqType } from "./documents/faqType";
-import { eventType } from "./documents/eventType";
+import { concertType } from "./documents/concertType";
 import { artistType } from "./documents/artistType";
 import { venueType } from "./documents/venueType";
 import { redirectType } from "./documents/redirectType";
+import { stageType } from "./objects/stageType";
 // Singletons
 import { siteSettingsType } from "./singletons/siteSettingsType";
 import { gpDetailsType } from "./singletons/gpDetailsType";
@@ -30,7 +31,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     blockContentType,
     categoryType,
-    postType,
+    articleType,
     authorType,
     pageType,
     heroType,
@@ -45,9 +46,10 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     socialType,
     gpDetailsType,
     statType,
-    eventType,
+    concertType,
     raceEventType,
     artistType,
     venueType,
+    stageType,
   ],
 };

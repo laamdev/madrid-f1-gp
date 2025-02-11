@@ -1,11 +1,11 @@
-import { DocumentTextIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { Article } from "@phosphor-icons/react/dist/ssr";
 
-export const postType = defineType({
-  name: "post",
-  title: "Post",
+export const articleType = defineType({
+  name: "article",
+  title: "Article",
   type: "document",
-  icon: DocumentTextIcon,
+  icon: Article,
   fields: [
     defineField({
       name: "title",
@@ -59,9 +59,9 @@ export const postType = defineType({
       type: "blockContent",
     }),
     defineField({
-      name: "relatedPosts",
+      name: "relatedArticles",
       type: "array",
-      of: [{ type: "reference", to: { type: "post" } }],
+      of: [{ type: "reference", to: { type: "article" } }],
     }),
   ],
   preview: {

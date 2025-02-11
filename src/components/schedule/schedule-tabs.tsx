@@ -9,15 +9,15 @@ export const ScheduleTabs = () => {
   const competition = searchParams.get("competition") || "f1";
 
   const getTabStyles = (tabCompetition: string) => {
-    return `relative w-24 rounded-xl aspect-square cursor-pointer transition-all duration-200 ${
+    return `relative border-2 w-16 md:w-20 rounded-xl aspect-square cursor-pointer transition-all duration-200 ${
       competition === tabCompetition
-        ? "bg-white ring-2 ring-primary"
+        ? "bg-white border-transparent ring-2 ring-primary"
         : "hover:bg-neutral-200"
     }`;
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex md:flex-col flex-row gap-4">
       <Link
         href="?competition=f1"
         className={getTabStyles("f1")}

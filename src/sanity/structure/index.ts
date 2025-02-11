@@ -31,24 +31,30 @@ export const structure: StructureResolver = (S) =>
         ),
       S.divider(),
       S.listItem()
-        .title("Upcoming Events")
-        .schemaType("event")
+        .title("Internal Concerts")
+        .schemaType("concert")
         .icon(CalendarBlank)
         .child(
-          S.documentList().title("Upcoming Events").filter("date >= now()")
+          S.documentList()
+            .title("Internal Concerts")
+            .filter("location == 'internal'")
         ),
       S.listItem()
-        .title("Past Events")
-        .schemaType("event")
+        .title("External Concerts")
+        .schemaType("concert")
         .icon(CalendarBlank)
-        .child(S.documentList().title("Past Events").filter("date < now()")),
+        .child(
+          S.documentList()
+            .title("External Concerts")
+            .filter("location == 'external'")
+        ),
       S.documentTypeListItem("artist").title("Artists").icon(Microphone),
       S.documentTypeListItem("venue").title("Venues").icon(MapPin),
       S.divider(),
       ...S.documentTypeListItems().filter(
         (item) =>
           item.getId() &&
-          !["siteSettings", "gpDetails", "artist", "venue"].includes(
+          !["siteSettings", "gpDetails", "artist", "venue", "concert"].includes(
             item.getId()!
           )
       ),

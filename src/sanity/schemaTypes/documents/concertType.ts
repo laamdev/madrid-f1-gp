@@ -3,9 +3,9 @@ import { CalendarBlank } from "@phosphor-icons/react/dist/ssr";
 
 import { DoorsOpenInput } from "@/components/sanity/doors-open-input";
 
-export const eventType = defineType({
-  name: "event",
-  title: "Event",
+export const concertType = defineType({
+  name: "concert",
+  title: "Concert",
   type: "document",
   icon: CalendarBlank,
   groups: [
@@ -26,19 +26,44 @@ export const eventType = defineType({
       hidden: ({ document }) => !document?.name,
     }),
     defineField({
+      name: "location",
+      type: "string",
+      options: {
+        list: ["internal", "external"],
+        layout: "radio",
+      },
+      initialValue: "internal",
+    }),
+    defineField({
       name: "venue",
       type: "reference",
       to: [{ type: "venue" }],
-      readOnly: ({ value, document }) =>
-        !value && document?.eventType === "virtual",
-      validation: (rule) =>
-        rule.custom((value, context) => {
-          if (value && context?.document?.eventType === "virtual") {
-            return "Only in-person events can have a venue";
-          }
-
-          return true;
-        }),
+      hidden: ({ document }) => document?.location === "internal",
+      // // readOnly: ({ value, document }) => {
+      // //   if (document?.location === "internal") {
+      // //     return true;
+      // //   }
+      // //   return false;
+      // // },
+      // // initialValue: async () => {
+      // //   return {
+      // //     _type: "reference",
+      // //     _ref: "2902319e-c17d-49c7-9354-228d8a507df0",
+      // //   };
+      // // },
+      // // validation: (rule) =>
+      // //   rule.custom((value, context) => {
+      // //     if (value && context?.document?.location === "internal") {
+      // //       return "Only external concerts can have a venue";
+      // //     }
+      // //     return true;
+      // //   }),
+    }),
+    defineField({
+      name: "stage",
+      type: "reference",
+      to: [{ type: "stage" }],
+      hidden: ({ document }) => document?.location === "external",
     }),
     defineField({
       name: "date",
@@ -55,13 +80,30 @@ export const eventType = defineType({
       },
     }),
     defineField({
-      name: "headline",
-      type: "reference",
-      to: [{ type: "artist" }],
+      name: "lineup",
+      type: "array",
+      description:
+        "If there is more than one artist, the one at the top is the headliner",
+      of: [{ type: "reference", to: [{ type: "artist" }] }],
     }),
     defineField({
       name: "image",
       type: "image",
+      description: "The image will be used as the main image for the concert",
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        {
+          name: "alt",
+          title: "Alternative Text",
+          type: "string",
+          validation: (Rule) => Rule.required(),
+          options: {
+            isHighlighted: true,
+          },
+        },
+      ],
     }),
     defineField({
       name: "details",
@@ -82,12 +124,12 @@ export const eventType = defineType({
     select: {
       name: "name",
       venue: "venue.name",
-      artist: "headline.name",
+      artist: "artists[0].name",
       date: "date",
       image: "image",
     },
     prepare({ name, venue, artist, date, image }) {
-      const nameFormatted = name || "Untitled event";
+      const nameFormatted = name || "Untitled concert";
       const dateFormatted = date
         ? new Date(date).toLocaleDateString(undefined, {
             month: "short",

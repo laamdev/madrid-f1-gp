@@ -68,37 +68,13 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type RaceEvent = {
-  _type: "raceEvent";
-  name?: "practice-1" | "practice-2" | "practice-3" | "qualifying" | "race" | "sprint" | "sprint-shootout";
-  competition?: "f1" | "f2" | "f3";
-  startTime?: string;
-  hasEndTime?: boolean;
-  endTime?: string;
-};
-
-export type Event = {
+export type Artist = {
   _id: string;
-  _type: "event";
+  _type: "artist";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name?: string;
-  slug?: Slug;
-  venue?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "venue";
-  };
-  date?: string;
-  doorsOpen?: number;
-  headline?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "artist";
-  };
+  title?: string;
   image?: {
     asset?: {
       _ref: string;
@@ -108,6 +84,91 @@ export type Event = {
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  bio?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }>;
+  spotify?: string;
+};
+
+export type RaceEvent = {
+  _type: "raceEvent";
+  name?: "practice-1" | "practice-2" | "practice-3" | "qualifying" | "race" | "sprint" | "sprint-shootout";
+  competition?: "f1" | "f2" | "f3";
+  startTime?: string;
+  hasEndTime?: boolean;
+  endTime?: string;
+};
+
+export type Concert = {
+  _id: string;
+  _type: "concert";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  slug?: Slug;
+  location?: "internal" | "external";
+  venue?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "venue";
+  };
+  stage?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "stage";
+  };
+  date?: string;
+  doorsOpen?: number;
+  lineup?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "artist";
+  }>;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
     _type: "image";
   };
   details?: Array<{
@@ -132,13 +193,13 @@ export type Event = {
   seo?: Seo;
 };
 
-export type Artist = {
+export type Stage = {
   _id: string;
-  _type: "artist";
+  _type: "stage";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
+  name?: string;
 };
 
 export type Venue = {
@@ -390,9 +451,9 @@ export type Seo = {
   noIndex?: boolean;
 };
 
-export type Post = {
+export type Article = {
   _id: string;
-  _type: "post";
+  _type: "article";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -454,12 +515,12 @@ export type Post = {
     _type: "image";
     _key: string;
   }>;
-  relatedPosts?: Array<{
+  relatedArticles?: Array<{
     _ref: string;
     _type: "reference";
     _weak?: boolean;
     _key: string;
-    [internalGroqTypeReferenceTo]?: "post";
+    [internalGroqTypeReferenceTo]?: "article";
   }>;
 };
 
@@ -607,7 +668,7 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | RaceEvent | Event | Artist | Venue | Stat | GpDetails | Redirect | SiteSettings | PageBuilder | Faq | Faqs | Features | SplitImage | Hero | Page | Social | Seo | Post | Author | Category | Slug | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Artist | RaceEvent | Concert | Stage | Venue | Stat | GpDetails | Redirect | SiteSettings | PageBuilder | Faq | Faqs | Features | SplitImage | Hero | Page | Social | Seo | Article | Author | Category | Slug | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: PAGE_QUERY
@@ -903,9 +964,9 @@ export type HOME_PAGE_QUERYResult = {
     social?: Social;
   } | null;
 } | null;
-// Variable: POSTS_QUERY
-// Query: *[_type == "post" && defined(slug.current)]|order(publishedAt desc)[0...12]{  _id,  title,  slug,  body,  mainImage,  publishedAt,  "categories": coalesce(    categories[]->{      _id,      slug,      title    },    []  ),  author->{    name,    image  },  relatedPosts[]{    _key, // required for drag and drop    ...@->{_id, title, slug} // get fields from the referenced post  }}
-export type POSTS_QUERYResult = Array<{
+// Variable: ARTICLES_QUERY
+// Query: *[_type == "article" && defined(slug.current)]|order(publishedAt desc)[0...12]{  _id,  title,  slug,  body,  mainImage,  publishedAt,  "categories": coalesce(    categories[]->{      _id,      slug,      title    },    []  ),  author->{    name,    image  },  relatedArticles[]{    _key, // required for drag and drop    ...@->{_id, title, slug} // get fields from the referenced post  }}
+export type ARTICLES_QUERYResult = Array<{
   _id: string;
   title: string | null;
   slug: Slug | null;
@@ -971,21 +1032,21 @@ export type POSTS_QUERYResult = Array<{
       _type: "image";
     } | null;
   } | null;
-  relatedPosts: Array<{
+  relatedArticles: Array<{
     _key: string;
     _id: string;
     title: string | null;
     slug: Slug | null;
   }> | null;
 }>;
-// Variable: POSTS_SLUGS_QUERY
-// Query: *[_type == "post" && defined(slug.current)]{   "slug": slug.current}
-export type POSTS_SLUGS_QUERYResult = Array<{
+// Variable: ARTICLES_SLUGS_QUERY
+// Query: *[_type == "article" && defined(slug.current)]{   "slug": slug.current}
+export type ARTICLES_SLUGS_QUERYResult = Array<{
   slug: string | null;
 }>;
-// Variable: POST_QUERY
-// Query: *[_type == "post" && slug.current == $slug][0]{  _id,  title,  body,  mainImage,  publishedAt,  "categories": coalesce(    categories[]->{      _id,      slug,      title    },    []  ),  author->{    name,    image  },  relatedPosts[]{    _key,    ...@->{_id, title, slug}  }}
-export type POST_QUERYResult = {
+// Variable: ARTICLE_QUERY
+// Query: *[_type == "article" && slug.current == $slug][0]{  _id,  title,  body,  mainImage,  publishedAt,  "categories": coalesce(    categories[]->{      _id,      slug,      title    },    []  ),  author->{    name,    image  },  relatedArticles[]{    _key,    ...@->{_id, title, slug}  }}
+export type ARTICLE_QUERYResult = {
   _id: string;
   title: string | null;
   body: Array<{
@@ -1050,7 +1111,7 @@ export type POST_QUERYResult = {
       _type: "image";
     } | null;
   } | null;
-  relatedPosts: Array<{
+  relatedArticles: Array<{
     _key: string;
     _id: string;
     title: string | null;
@@ -1102,7 +1163,7 @@ export type OG_IMAGE_QUERYResult = {
   } | null;
 } | null;
 // Variable: SITEMAP_QUERY
-// Query: *[_type in ["page", "post"] && defined(slug.current)] {      "href": select(        _type == "page" => "/" + slug.current,        _type == "post" => "/posts/" + slug.current,        slug.current      ),      _updatedAt  }
+// Query: *[_type in ["page", "article"] && defined(slug.current)] {      "href": select(        _type == "page" => "/" + slug.current,        _type == "article" => "/news/" + slug.current,        slug.current      ),      _updatedAt  }
 export type SITEMAP_QUERYResult = Array<{
   href: string | null;
   _updatedAt: string;
@@ -1136,14 +1197,6 @@ export type GP_DETAILS_QUERYResult = {
 } | {
   _id: string;
   name: string | null;
-  location: null;
-  raceDate: null;
-  track: null;
-  racingSchedule: null;
-  seo: Seo | null;
-} | {
-  _id: string;
-  name: string | null;
   location: {
     circuit?: string;
     country?: string;
@@ -1157,16 +1210,89 @@ export type GP_DETAILS_QUERYResult = {
     _key: string;
   } & RaceEvent> | null;
   seo: Seo | null;
+} | {
+  _id: string;
+  name: string | null;
+  location: "external" | "internal" | null;
+  raceDate: null;
+  track: null;
+  racingSchedule: null;
+  seo: Seo | null;
 } | null;
-// Variable: EVENTS_QUERY
-// Query: *[  _type == "event"  && eventType == "in-person"  && date > now()]{  name,  headline->{    name  },   "isUpcoming": true}
-export type EVENTS_QUERYResult = Array<never>;
+// Variable: CONCERTS_QUERY
+// Query: *[  _type == "concert"  && location == "internal"  && date > now() ] | order(date asc) {  _id,  name,  "slug": slug.current,  image,  location,  stage->{    name  },  venue->,  date,  headline->{    name  },   "isUpcoming": true}
+export type CONCERTS_QUERYResult = Array<{
+  _id: string;
+  name: string | null;
+  slug: string | null;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  location: "external" | "internal" | null;
+  stage: {
+    name: string | null;
+  } | null;
+  venue: {
+    _id: string;
+    _type: "venue";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    title?: string;
+  } | null;
+  date: string | null;
+  headline: null;
+  isUpcoming: true;
+}>;
 // Variable: SCHEDULE_QUERY
 // Query: *[_type == "gpDetails"][0]{  racingSchedule[]}
 export type SCHEDULE_QUERYResult = {
   racingSchedule: Array<{
     _key: string;
   } & RaceEvent> | null;
+} | null;
+// Variable: CONCERT_BY_SLUG_QUERY
+// Query: *[_type == "concert" && slug.current == $slug][0]{  _id,  name,  "slug": slug.current,  image,  location,  stage->{    name  },  venue->,  date,  headline->{    name  },  "isUpcoming": true}
+export type CONCERT_BY_SLUG_QUERYResult = {
+  _id: string;
+  name: string | null;
+  slug: string | null;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  location: "external" | "internal" | null;
+  stage: {
+    name: string | null;
+  } | null;
+  venue: {
+    _id: string;
+    _type: "venue";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    title?: string;
+  } | null;
+  date: string | null;
+  headline: null;
+  isUpcoming: true;
 } | null;
 
 // Query TypeMap
@@ -1175,14 +1301,15 @@ declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"page\" && slug.current == $slug][0]{\n  ...,\n  \"seo\": {\n    \"title\": coalesce(seo.title, title, \"\"),\n    \"description\": coalesce(seo.description,  \"\"),\n    \"image\": seo.image,\n    \"noIndex\": seo.noIndex == true\n  },\n  content[]{\n    ...,\n    _type == \"faqs\" => {\n      ...,\n      faqs[]-> {\n        _id,\n        title,\n        body,\n        \"text\": pt::text(body)\n      }\n    }\n  }\n}": PAGE_QUERYResult;
     "*[_id == \"siteSettings\"][0]{\n  homePage->{\n    ...,\n    content[]{\n      ...,\n      _type == \"faqs\" => {\n        ...,\n        faqs[]->\n      }\n    }      \n  }\n}": HOME_PAGE_QUERYResult;
-    "*[_type == \"post\" && defined(slug.current)]|order(publishedAt desc)[0...12]{\n  _id,\n  title,\n  slug,\n  body,\n  mainImage,\n  publishedAt,\n  \"categories\": coalesce(\n    categories[]->{\n      _id,\n      slug,\n      title\n    },\n    []\n  ),\n  author->{\n    name,\n    image\n  },\n  relatedPosts[]{\n    _key, // required for drag and drop\n    ...@->{_id, title, slug} // get fields from the referenced post\n  }\n}": POSTS_QUERYResult;
-    "*[_type == \"post\" && defined(slug.current)]{ \n  \"slug\": slug.current\n}": POSTS_SLUGS_QUERYResult;
-    "*[_type == \"post\" && slug.current == $slug][0]{\n  _id,\n  title,\n  body,\n  mainImage,\n  publishedAt,\n  \"categories\": coalesce(\n    categories[]->{\n      _id,\n      slug,\n      title\n    },\n    []\n  ),\n  author->{\n    name,\n    image\n  },\n  relatedPosts[]{\n    _key,\n    ...@->{_id, title, slug}\n  }\n}": POST_QUERYResult;
+    "*[_type == \"article\" && defined(slug.current)]|order(publishedAt desc)[0...12]{\n  _id,\n  title,\n  slug,\n  body,\n  mainImage,\n  publishedAt,\n  \"categories\": coalesce(\n    categories[]->{\n      _id,\n      slug,\n      title\n    },\n    []\n  ),\n  author->{\n    name,\n    image\n  },\n  relatedArticles[]{\n    _key, // required for drag and drop\n    ...@->{_id, title, slug} // get fields from the referenced post\n  }\n}": ARTICLES_QUERYResult;
+    "*[_type == \"article\" && defined(slug.current)]{ \n  \"slug\": slug.current\n}": ARTICLES_SLUGS_QUERYResult;
+    "*[_type == \"article\" && slug.current == $slug][0]{\n  _id,\n  title,\n  body,\n  mainImage,\n  publishedAt,\n  \"categories\": coalesce(\n    categories[]->{\n      _id,\n      slug,\n      title\n    },\n    []\n  ),\n  author->{\n    name,\n    image\n  },\n  relatedArticles[]{\n    _key,\n    ...@->{_id, title, slug}\n  }\n}": ARTICLE_QUERYResult;
     "\n  *[_type == \"redirect\" && isEnabled == true] {\n      source,\n      destination,\n      permanent\n  }\n": REDIRECTS_QUERYResult;
     "\n  *[_id == $id][0]{\n    title,\n    \"image\": mainImage {\n      asset->,\n      hotspot,\n      crop\n    }\n  }    \n": OG_IMAGE_QUERYResult;
-    "\n  *[_type in [\"page\", \"post\"] && defined(slug.current)] {\n      \"href\": select(\n        _type == \"page\" => \"/\" + slug.current,\n        _type == \"post\" => \"/posts/\" + slug.current,\n        slug.current\n      ),\n      _updatedAt\n  }\n  ": SITEMAP_QUERYResult;
+    "\n  *[_type in [\"page\", \"article\"] && defined(slug.current)] {\n      \"href\": select(\n        _type == \"page\" => \"/\" + slug.current,\n        _type == \"article\" => \"/news/\" + slug.current,\n        slug.current\n      ),\n      _updatedAt\n  }\n  ": SITEMAP_QUERYResult;
     "*[_id == \"gpDetails\"][0]{\n  _id,\n  name,\n  location,\n  raceDate,\n  track,\n  racingSchedule[],\n  seo\n}": GP_DETAILS_QUERYResult;
-    "*[\n  _type == \"event\"\n  && eventType == \"in-person\"\n  && date > now()\n]{\n  name,\n  headline->{\n    name\n  }, \n  \"isUpcoming\": true\n}": EVENTS_QUERYResult;
+    "*[\n  _type == \"concert\"\n  && location == \"internal\"\n  && date > now() \n] | order(date asc) {\n  _id,\n  name,\n  \"slug\": slug.current,\n  image,\n  location,\n  stage->{\n    name\n  },\n  venue->,\n  date,\n  headline->{\n    name\n  }, \n  \"isUpcoming\": true\n}": CONCERTS_QUERYResult;
     "*[_type == \"gpDetails\"][0]{\n  racingSchedule[]\n}": SCHEDULE_QUERYResult;
+    "*[_type == \"concert\" && slug.current == $slug][0]{\n  _id,\n  name,\n  \"slug\": slug.current,\n  image,\n  location,\n  stage->{\n    name\n  },\n  venue->,\n  date,\n  headline->{\n    name\n  },\n  \"isUpcoming\": true\n}": CONCERT_BY_SLUG_QUERYResult;
   }
 }

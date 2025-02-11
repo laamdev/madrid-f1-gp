@@ -4,7 +4,7 @@ import Link from "next/link";
 import { createDataAttribute } from "next-sanity";
 import { useOptimistic } from "next-sanity/hooks";
 
-import { POST_QUERYResult } from "@/sanity/types";
+import { ARTICLE_QUERYResult } from "@/sanity/types";
 import { client } from "@/sanity/lib/client";
 
 const { projectId, dataset, stega } = client.config();
@@ -14,33 +14,33 @@ export const createDataAttributeConfig = {
   baseUrl: typeof stega.studioUrl === "string" ? stega.studioUrl : "",
 };
 
-export function RelatedPosts({
-  relatedPosts,
+export function RelatedArticles({
+  relatedArticles,
   documentId,
   documentType,
 }: {
-  relatedPosts: NonNullable<POST_QUERYResult>["relatedPosts"];
+  relatedArticles: NonNullable<ARTICLE_QUERYResult>["relatedArticles"];
   documentId: string;
   documentType: string;
 }) {
-  const posts = useOptimistic<
-    NonNullable<POST_QUERYResult>["relatedPosts"] | undefined,
-    NonNullable<POST_QUERYResult>
-  >(relatedPosts, (state, action) => {
-    if (action.id === documentId && action?.document?.relatedPosts) {
+  const articles = useOptimistic<
+    NonNullable<ARTICLE_QUERYResult>["relatedArticles"] | undefined,
+    NonNullable<ARTICLE_QUERYResult>
+  >(relatedArticles, (state, action) => {
+    if (action.id === documentId && action?.document?.relatedArticles) {
       // Optimistic document only has _ref values, not resolved references
-      return action.document.relatedPosts.map(
-        (post) => state?.find((p) => p._key === post._key) ?? post
+      return action.document.relatedArticles.map(
+        (article) => state?.find((p) => p._key === article._key) ?? article
       );
     }
     return state;
   });
-  if (!posts) {
+  if (!articles) {
     return null;
   }
   return (
     <aside className="border-t">
-      <h2>Related Posts</h2>
+      <h2>Related Articles</h2>
       <div className="not-prose text-balance">
         <ul
           className="flex flex-col sm:flex-row gap-0.5"
@@ -48,21 +48,23 @@ export function RelatedPosts({
             ...createDataAttributeConfig,
             id: documentId,
             type: documentType,
-            path: "relatedPosts",
+            path: "relatedArticles",
           }).toString()}
         >
-          {posts.map((post) => (
+          {articles.map((article) => (
             <li
-              key={post._key}
+              key={article._key}
               className="p-4 bg-blue-50 sm:w-1/3 flex-shrink-0"
               data-sanity={createDataAttribute({
                 ...createDataAttributeConfig,
                 id: documentId,
                 type: documentType,
-                path: `relatedPosts[_key=="${post._key}"]`,
+                path: `relatedArticles[_key=="${article._key}"]`,
               }).toString()}
             >
-              <Link href={`/posts/${post?.slug?.current}`}>{post.title}</Link>
+              <Link href={`/news/${article?.slug?.current}`}>
+                {article.title}
+              </Link>
             </li>
           ))}
         </ul>

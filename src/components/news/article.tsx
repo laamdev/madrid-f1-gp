@@ -1,17 +1,17 @@
 import Image from "next/image";
 import { PortableText } from "next-sanity";
 
-import { Author } from "@/components/blog/author";
-import { Categories } from "@/components/blog/categories";
+import { Author } from "@/components/news/author";
+import { Categories } from "@/components/news/categories";
 import { Title } from "@/components/shared/title";
-// // import { RelatedPosts } from "@/components/blog/related-posts";
-import { PublishedAt } from "@/components/blog/published-at";
+import { RelatedArticles } from "@/components/news/related-articles";
+import { PublishedAt } from "@/components/news/published-at";
 
 import { components } from "@/sanity/portableTextComponents";
-import { POST_QUERYResult } from "@/sanity/types";
+import { ARTICLE_QUERYResult } from "@/sanity/types";
 import { urlFor } from "@/sanity/lib/image";
 
-export const Post = (props: NonNullable<POST_QUERYResult>) => {
+export const Article = (props: NonNullable<ARTICLE_QUERYResult>) => {
   const {
     _id,
     title,
@@ -20,7 +20,7 @@ export const Post = (props: NonNullable<POST_QUERYResult>) => {
     body,
     publishedAt,
     categories,
-    // // relatedPosts,
+    relatedArticles,
   } = props;
 
   return (
@@ -46,11 +46,11 @@ export const Post = (props: NonNullable<POST_QUERYResult>) => {
       {body ? (
         <div className="lg:col-span-7 lg:col-start-6 prose lg:prose-lg">
           <PortableText value={body} components={components} />
-          {/* <RelatedPosts
-            relatedPosts={relatedPosts}
+          <RelatedArticles
+            relatedArticles={relatedArticles}
             documentId={_id}
-            documentType="post"
-          /> */}
+            documentType="article"
+          />
         </div>
       ) : null}
     </article>

@@ -36,8 +36,8 @@ export const HOME_PAGE_QUERY = defineQuery(`*[_id == "siteSettings"][0]{
   }
 }`);
 
-export const POSTS_QUERY =
-  defineQuery(`*[_type == "post" && defined(slug.current)]|order(publishedAt desc)[0...12]{
+export const ARTICLES_QUERY =
+  defineQuery(`*[_type == "article" && defined(slug.current)]|order(publishedAt desc)[0...12]{
   _id,
   title,
   slug,
@@ -56,19 +56,19 @@ export const POSTS_QUERY =
     name,
     image
   },
-  relatedPosts[]{
+  relatedArticles[]{
     _key, // required for drag and drop
     ...@->{_id, title, slug} // get fields from the referenced post
   }
 }`);
 
-export const POSTS_SLUGS_QUERY =
-  defineQuery(`*[_type == "post" && defined(slug.current)]{ 
+export const ARTICLES_SLUGS_QUERY =
+  defineQuery(`*[_type == "article" && defined(slug.current)]{ 
   "slug": slug.current
 }`);
 
-export const POST_QUERY =
-  defineQuery(`*[_type == "post" && slug.current == $slug][0]{
+export const ARTICLE_QUERY =
+  defineQuery(`*[_type == "article" && slug.current == $slug][0]{
   _id,
   title,
   body,
@@ -86,7 +86,7 @@ export const POST_QUERY =
     name,
     image
   },
-  relatedPosts[]{
+  relatedArticles[]{
     _key,
     ...@->{_id, title, slug}
   }
@@ -112,10 +112,10 @@ export const OG_IMAGE_QUERY = defineQuery(`
 `);
 
 export const SITEMAP_QUERY = defineQuery(`
-  *[_type in ["page", "post"] && defined(slug.current)] {
+  *[_type in ["page", "article"] && defined(slug.current)] {
       "href": select(
         _type == "page" => "/" + slug.current,
-        _type == "post" => "/posts/" + slug.current,
+        _type == "article" => "/news/" + slug.current,
         slug.current
       ),
       _updatedAt
@@ -132,12 +132,21 @@ export const GP_DETAILS_QUERY = defineQuery(`*[_id == "gpDetails"][0]{
   seo
 }`);
 
-export const EVENTS_QUERY = defineQuery(`*[
-  _type == "event"
-  && eventType == "in-person"
-  && date > now()
-]{
+export const CONCERTS_QUERY = defineQuery(`*[
+  _type == "concert"
+  && location == "internal"
+  && date > now() 
+] | order(date asc) {
+  _id,
   name,
+  "slug": slug.current,
+  image,
+  location,
+  stage->{
+    name
+  },
+  venue->,
+  date,
   headline->{
     name
   }, 
@@ -146,4 +155,22 @@ export const EVENTS_QUERY = defineQuery(`*[
 
 export const SCHEDULE_QUERY = defineQuery(`*[_type == "gpDetails"][0]{
   racingSchedule[]
+}`);
+
+export const CONCERT_BY_SLUG_QUERY =
+  defineQuery(`*[_type == "concert" && slug.current == $slug][0]{
+  _id,
+  name,
+  "slug": slug.current,
+  image,
+  location,
+  stage->{
+    name
+  },
+  venue->,
+  date,
+  headline->{
+    name
+  },
+  "isUpcoming": true
 }`);
