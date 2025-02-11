@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "manifest": "sanity manifest extract --path public/studio/static && next build",
-    "predev": "bun run typegen",
-    "prebuild": "bun run typegen",
+    "predev": "bun run typegen && bun run manifest",
+    "prebuild": "bun run typegen && bun run manifest",
     "typegen": "sanity schema extract --path=./src/sanity/extract.json && sanity typegen generate"
   },
   "dependencies": {
