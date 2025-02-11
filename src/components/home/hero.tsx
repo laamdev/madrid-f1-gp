@@ -40,7 +40,7 @@ export const HomeHero = ({
             src="/images/home-hero.webp"
             alt="F1 cars racing on a track."
             fill
-            className="object-cover object-[25%_90%]"
+            className="object-cover object-[25%_90%] bg-card"
             priority
           />
         </div>

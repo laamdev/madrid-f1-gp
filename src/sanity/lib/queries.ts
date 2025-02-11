@@ -143,3 +143,7 @@ export const EVENTS_QUERY = defineQuery(`*[
   }, 
   "isUpcoming": true
 }`);
+
+export const SCHEDULE_QUERY = defineQuery(`*[_type == "gpDetails"][0]{
+  racingSchedule[]
+}`);

@@ -24,7 +24,7 @@ export const Header = () => {
           <li>
             <Link
               className="hover:text-blue-700 transition-colors"
-              href="/studio"
+              href="/schedule"
             >
               Schedule
             </Link>

@@ -1,6 +1,6 @@
 import { PortableText } from "next-sanity";
 import Image from "next/image";
-// // import { Title } from "@/components/shared/title";
+
 import { urlFor } from "@/sanity/lib/image";
 import { PAGE_QUERYResult } from "@/sanity/types";
 
@@ -11,7 +11,7 @@ type HeroProps = Extract<
 
 export const Hero = ({ title, text, image }: HeroProps) => {
   return (
-    <section className="isolate w-full aspect-[2/1] py-16 relative overflow-hidden">
+    <section className="isolate rounded-xl w-full aspect-[2/1] py-16 relative overflow-hidden">
       <div className="relative flex flex-col justify-center items-center gap-8 h-full z-20">
         {title ? (
           <h1 className="text-2xl md:text-4xl lg:text-6xl font-semibold text-white text-pretty max-w-3xl">

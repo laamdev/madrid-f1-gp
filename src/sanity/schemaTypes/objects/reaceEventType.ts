@@ -14,13 +14,13 @@ export const raceEventType = defineType({
       type: "string",
       options: {
         list: [
-          { title: "Practice 1", value: "practice1" },
-          { title: "Practice 2", value: "practice2" },
-          { title: "Practice 3", value: "practice3" },
+          { title: "Practice 1", value: "practice-1" },
+          { title: "Practice 2", value: "practice-2" },
+          { title: "Practice 3", value: "practice-3" },
           { title: "Qualifying", value: "qualifying" },
           { title: "Race", value: "race" },
           { title: "Sprint", value: "sprint" },
-          { title: "Sprint Shootout", value: "sprintShootout" },
+          { title: "Sprint Shootout", value: "sprint-shootout" },
         ],
       },
     }),
@@ -65,13 +65,13 @@ export const raceEventType = defineType({
     },
     prepare({ name, competition }) {
       const eventNames = {
-        practice1: "Practice 1",
-        practice2: "Practice 2",
-        practice3: "Practice 3",
+        "practice-1": "Practice 1",
+        "practice-2": "Practice 2",
+        "practice-3": "Practice 3",
         qualifying: "Qualifying",
         race: "Race",
         sprint: "Sprint",
-        sprintShootout: "Sprint Shootout",
+        "sprint-shootout": "Sprint Shootout",
       };
 
       return {
