@@ -2,10 +2,18 @@ import Image from "next/image";
 import Link from "next/link";
 import dayjs from "dayjs";
 
-import { Concert } from "@/sanity/types";
 import { urlFor } from "@/sanity/lib/image";
+import { Concert } from "@/sanity/types";
 
-export const ConcertCard = ({ concert }: { concert: Concert }) => {
+type ConcertWithExpandedStage = Omit<Concert, "stage"> & {
+  stage?: { name?: string } | null;
+};
+
+export const ConcertCard = ({
+  concert,
+}: {
+  concert: ConcertWithExpandedStage;
+}) => {
   return (
     <Link href={`/concerts/${concert.slug}`}>
       <div className="relative w-full aspect-square rounded-xl group overflow-hidden">

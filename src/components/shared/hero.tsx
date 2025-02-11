@@ -3,12 +3,14 @@ import Image from "next/image";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import { urlFor } from "@/sanity/lib/image";
 
+type HeroImage = string | (SanityImageSource & { alt?: string });
+
 export const Hero = ({
   heading,
   image,
 }: {
   heading: string;
-  image: string | SanityImageSource;
+  image: HeroImage;
 }) => {
   return (
     <section className="rounded-xl overflow-hidden">
@@ -25,7 +27,11 @@ export const Hero = ({
                     .auto("format")
                     .url()
             }
-            alt={image.alt || heading || "Concert Image"}
+            alt={
+              typeof image === "string"
+                ? heading || "Concert Image"
+                : image.alt || heading || "Concert Image"
+            }
             fill
             className="object-cover object-[25%_90%] bg-card"
             priority

@@ -149,7 +149,7 @@ export const CONCERTS_QUERY = defineQuery(`*[
   date,
   headline->{
     name
-  }, 
+  },
   "isUpcoming": true
 }`);
 

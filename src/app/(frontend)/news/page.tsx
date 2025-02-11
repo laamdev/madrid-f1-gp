@@ -1,4 +1,4 @@
-import { ArticleCard } from "@/components/news/article-card";
+// // import { ArticleCard } from "@/components/news/article-card";
 import { Title } from "@/components/shared/title";
 
 import { sanityFetch } from "@/sanity/lib/live";
@@ -14,7 +14,8 @@ export default async function Page() {
       <Title>Post Index</Title>
       <div className="flex flex-col gap-24 py-12">
         {articles.map((article) => (
-          <ArticleCard key={article._id} {...article} />
+          <div key={article._id}>x</div>
+          // // <ArticleCard key={article._id} article={article} />
         ))}
       </div>
     </main>

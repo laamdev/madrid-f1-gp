@@ -1220,7 +1220,7 @@ export type GP_DETAILS_QUERYResult = {
   seo: Seo | null;
 } | null;
 // Variable: CONCERTS_QUERY
-// Query: *[  _type == "concert"  && location == "internal"  && date > now() ] | order(date asc) {  _id,  name,  "slug": slug.current,  image,  location,  stage->{    name  },  venue->,  date,  headline->{    name  },   "isUpcoming": true}
+// Query: *[  _type == "concert"  && location == "internal"  && date > now() ] | order(date asc) {  _id,  name,  "slug": slug.current,  image,  location,  stage->{    name  },  venue->,  date,  headline->{    name  },  "isUpcoming": true}
 export type CONCERTS_QUERYResult = Array<{
   _id: string;
   name: string | null;
@@ -1308,7 +1308,7 @@ declare module "@sanity/client" {
     "\n  *[_id == $id][0]{\n    title,\n    \"image\": mainImage {\n      asset->,\n      hotspot,\n      crop\n    }\n  }    \n": OG_IMAGE_QUERYResult;
     "\n  *[_type in [\"page\", \"article\"] && defined(slug.current)] {\n      \"href\": select(\n        _type == \"page\" => \"/\" + slug.current,\n        _type == \"article\" => \"/news/\" + slug.current,\n        slug.current\n      ),\n      _updatedAt\n  }\n  ": SITEMAP_QUERYResult;
     "*[_id == \"gpDetails\"][0]{\n  _id,\n  name,\n  location,\n  raceDate,\n  track,\n  racingSchedule[],\n  seo\n}": GP_DETAILS_QUERYResult;
-    "*[\n  _type == \"concert\"\n  && location == \"internal\"\n  && date > now() \n] | order(date asc) {\n  _id,\n  name,\n  \"slug\": slug.current,\n  image,\n  location,\n  stage->{\n    name\n  },\n  venue->,\n  date,\n  headline->{\n    name\n  }, \n  \"isUpcoming\": true\n}": CONCERTS_QUERYResult;
+    "*[\n  _type == \"concert\"\n  && location == \"internal\"\n  && date > now() \n] | order(date asc) {\n  _id,\n  name,\n  \"slug\": slug.current,\n  image,\n  location,\n  stage->{\n    name\n  },\n  venue->,\n  date,\n  headline->{\n    name\n  },\n  \"isUpcoming\": true\n}": CONCERTS_QUERYResult;
     "*[_type == \"gpDetails\"][0]{\n  racingSchedule[]\n}": SCHEDULE_QUERYResult;
     "*[_type == \"concert\" && slug.current == $slug][0]{\n  _id,\n  name,\n  \"slug\": slug.current,\n  image,\n  location,\n  stage->{\n    name\n  },\n  venue->,\n  date,\n  headline->{\n    name\n  },\n  \"isUpcoming\": true\n}": CONCERT_BY_SLUG_QUERYResult;
   }

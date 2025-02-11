@@ -1,18 +1,20 @@
 import { notFound } from "next/navigation";
 
 import { Hero } from "@/components/shared/hero";
-import { urlFor } from "@/sanity/lib/image";
+
 import { sanityFetch } from "@/sanity/lib/live";
 import { CONCERT_BY_SLUG_QUERY } from "@/sanity/lib/queries";
 
-export default async function ConcertPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+interface ConcertPageProps {
+  params: Promise<{ slug: string }>;
+}
+
+export default async function ConcertPage({ params }: ConcertPageProps) {
+  const { slug } = await params;
+
   const { data: concert } = await sanityFetch({
     query: CONCERT_BY_SLUG_QUERY,
-    params: { slug: params.slug },
+    params: { slug: slug },
   });
 
   if (!concert) {
@@ -21,7 +23,7 @@ export default async function ConcertPage({
 
   return (
     <div>
-      <Hero heading={concert.name} image={concert.image} />
+      <Hero heading={concert.name!} image={concert.image!} />
     </div>
   );
 }

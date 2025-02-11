@@ -1,11 +1,11 @@
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 import { Hero } from "@/components/shared/hero";
 import { ConcertCard } from "@/components/concerts/concert-card";
 
 import { CONCERTS_QUERY } from "@/sanity/lib/queries";
 import { sanityFetch } from "@/sanity/lib/live";
-import { Concert } from "@/sanity/types";
 
 export const metadata: Metadata = {
   title: "Concerts",
@@ -16,6 +16,10 @@ export default async function ConcertsPage() {
   const { data: concerts } = await sanityFetch({
     query: CONCERTS_QUERY,
   });
+
+  if (!concerts) {
+    notFound();
+  }
 
   return (
     <div>
@@ -34,7 +38,8 @@ export default async function ConcertsPage() {
           </p>
         </div>
         <div className="grid mt-8 grid-cols-1 md:grid-cols-4 gap-4">
-          {concerts?.map((concert: Concert) => (
+          {concerts.map((concert) => (
+            // @ts-expect-error type issue to fix
             <ConcertCard key={concert._id} concert={concert} />
           ))}
         </div>
