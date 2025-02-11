@@ -12,11 +12,14 @@ export const seoType = defineType({
     }),
     defineField({
       name: "description",
+      description: "If provided, this will override the description field",
       type: "text",
     }),
+
     defineField({
       name: "image",
       type: "image",
+      description: "If provided, this will override the OG image field",
       options: { hotspot: true },
     }),
     defineField({

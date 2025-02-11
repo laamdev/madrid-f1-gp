@@ -7,22 +7,32 @@ import { Footer } from "@/components/nav/footer";
 import { Header } from "@/components/nav/header";
 
 import { SanityLive } from "@/sanity/lib/live";
+import { sanityFetch } from "@/sanity/lib/live";
+import { GP_DETAILS_QUERY } from "@/sanity/lib/queries";
 
 export async function generateMetadata(): Promise<Metadata> {
+  const { data: gpDetails } = await sanityFetch({
+    query: GP_DETAILS_QUERY,
+  });
+
+  console.log(gpDetails);
+
   return {
     title: {
-      template: `%s | PTR`,
-      default: "IT Technical Training, Consultancy, Solutions | PTR",
+      template: `%s | ${gpDetails?.seo?.title || "2026 F1 Spanish Grand Prix"}`,
+      default: `Welcome back to F1 in Madrid | ${gpDetails?.seo?.title || "2026 F1 Spanish Grand Prix"}`,
     },
     openGraph: {
-      title: "IT Technical Training, Consultancy, Solutions | PTR",
+      title: `${gpDetails?.seo?.title || "2026 F1 Spanish Grand Prix"}`,
       description:
-        "IT Technical Training, Consultancy, Solutions with tailored solutions and expert insights.",
-      url: "https://ptr.co.uk",
-      siteName: "PTR",
+        gpDetails?.seo?.description ||
+        "After more than 4 decades of absence, the Formula 1 is back in Madrid. From 2026 to 2035, the capital will be the home of the Spanish Grand Prix.",
+      url: "https://madrid-f1-gp.vercel.app/",
+      siteName: "2026 F1 GP Madrid",
       images: [
         {
-          url: "https://ptr.co.uk/images/og.png",
+          url: "https://madrid-f1-gp.vercel.app/images/og.png",
+
           width: 1200,
           height: 630,
         },
@@ -31,7 +41,8 @@ export async function generateMetadata(): Promise<Metadata> {
       type: "website",
     },
     description:
-      "IT Technical Training, Consultancy, Solutions with tailored solutions and expert insights.",
+      gpDetails?.seo?.description ||
+      "After more than 4 decades of absence, the Formula 1 is back in Madrid. From 2026 to 2035, the capital will be the home of the Spanish Grand Prix.",
     robots: {
       index: true,
       follow: true,
@@ -44,15 +55,14 @@ export async function generateMetadata(): Promise<Metadata> {
       },
     },
     twitter: {
-      title: "PTR",
-      site: "https://ptr.co.uk",
+      title: `${gpDetails?.seo?.title || "2026 F1 Spanish Grand Prix"}`,
+      site: "https://madrid-f1-gp.vercel.app/",
       card: "summary_large_image",
-      description:
-        "IT Technical Training, Consultancy, Solutions with tailored solutions and expert insights.",
+      description: `${gpDetails?.seo?.description || "After more than 4 decades of absence, the Formula 1 is back in Madrid. From 2026 to 2035, the capital will be the home of the Spanish Grand Prix."}`,
       images: [
         {
-          url: "https://ptr.co.uk/images/og.png",
-          alt: "PTR Associates LTD.",
+          url: "https://madrid-f1-gp.vercel.app/images/og.png",
+          alt: "2026 F1 GP Madrid",
           width: 1200,
           height: 630,
         },
@@ -72,7 +82,7 @@ export default async function FrontendLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <section className="m-4">
+    <section className="m-4 overflow-x-hidden">
       <Header />
       {children}
       <Footer />

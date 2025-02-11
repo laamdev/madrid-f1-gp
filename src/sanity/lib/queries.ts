@@ -128,7 +128,8 @@ export const GP_DETAILS_QUERY = defineQuery(`*[_id == "gpDetails"][0]{
   location,
   raceDate,
   track,
-  racingSchedule[]
+  racingSchedule[],
+  seo
 }`);
 
 export const EVENTS_QUERY = defineQuery(`*[

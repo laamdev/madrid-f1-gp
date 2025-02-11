@@ -8,6 +8,10 @@ export const gpDetailsType = defineType({
   description: "Details of the 2026 F1 Spanish GP.",
   type: "document",
   icon: FlagCheckered,
+  groups: [
+    { name: "details", title: "Details" },
+    { name: "editorial", title: "Editorial" },
+  ],
   fields: [
     defineField({
       name: "name",
@@ -61,6 +65,13 @@ export const gpDetailsType = defineType({
       description: "Racing schedule for the GP weekend.",
       type: "array",
       of: [{ type: "raceEvent" }],
+    }),
+    defineField({
+      name: "seo",
+      title: "SEO",
+      description: "Metadata details for the GP's home page.",
+      type: "seo",
+      group: "editorial",
     }),
   ],
   preview: {
