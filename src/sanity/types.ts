@@ -70,7 +70,7 @@ export type Geopoint = {
 
 export type RaceEvent = {
   _type: "raceEvent";
-  name?: "practice1" | "practice2" | "practice3" | "qualifying" | "race" | "sprint" | "sprintShootout";
+  name?: "practice-1" | "practice-2" | "practice-3" | "qualifying" | "race" | "sprint" | "sprint-shootout";
   competition?: "f1" | "f2" | "f3";
   startTime?: string;
   hasEndTime?: boolean;
@@ -1161,6 +1161,13 @@ export type GP_DETAILS_QUERYResult = {
 // Variable: EVENTS_QUERY
 // Query: *[  _type == "event"  && eventType == "in-person"  && date > now()]{  name,  headline->{    name  },   "isUpcoming": true}
 export type EVENTS_QUERYResult = Array<never>;
+// Variable: SCHEDULE_QUERY
+// Query: *[_type == "gpDetails"][0]{  racingSchedule[]}
+export type SCHEDULE_QUERYResult = {
+  racingSchedule: Array<{
+    _key: string;
+  } & RaceEvent> | null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
@@ -1176,5 +1183,6 @@ declare module "@sanity/client" {
     "\n  *[_type in [\"page\", \"post\"] && defined(slug.current)] {\n      \"href\": select(\n        _type == \"page\" => \"/\" + slug.current,\n        _type == \"post\" => \"/posts/\" + slug.current,\n        slug.current\n      ),\n      _updatedAt\n  }\n  ": SITEMAP_QUERYResult;
     "*[_id == \"gpDetails\"][0]{\n  _id,\n  name,\n  location,\n  raceDate,\n  track,\n  racingSchedule[],\n  seo\n}": GP_DETAILS_QUERYResult;
     "*[\n  _type == \"event\"\n  && eventType == \"in-person\"\n  && date > now()\n]{\n  name,\n  headline->{\n    name\n  }, \n  \"isUpcoming\": true\n}": EVENTS_QUERYResult;
+    "*[_type == \"gpDetails\"][0]{\n  racingSchedule[]\n}": SCHEDULE_QUERYResult;
   }
 }

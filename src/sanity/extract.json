@@ -345,15 +345,15 @@
             "of": [
               {
                 "type": "string",
-                "value": "practice1"
+                "value": "practice-1"
               },
               {
                 "type": "string",
-                "value": "practice2"
+                "value": "practice-2"
               },
               {
                 "type": "string",
-                "value": "practice3"
+                "value": "practice-3"
               },
               {
                 "type": "string",
@@ -369,7 +369,7 @@
               },
               {
                 "type": "string",
-                "value": "sprintShootout"
+                "value": "sprint-shootout"
               }
             ]
           },

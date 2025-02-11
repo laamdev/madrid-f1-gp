@@ -51,11 +51,12 @@ export default async function SchedulePage({
     notFound();
   }
 
-  const competition = (searchParams.competition as string) || "f1";
+  const { competition } = await searchParams;
 
-  const filteredEvents = schedule.racingSchedule.filter(
-    (event: RaceEvent) => event.competition === competition
-  );
+  const filteredEvents =
+    schedule?.racingSchedule?.filter(
+      (event: RaceEvent) => event.competition === competition
+    ) || [];
 
   return (
     <div>
