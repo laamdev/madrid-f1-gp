@@ -28,7 +28,7 @@
     "embla-carousel-react": "^8.5.2",
     "lucide-react": "^0.475.0",
     "motion": "^12.4.2",
-    "next": "15.1.6",
+    "next": "15.1.7",
     "next-sanity": "^9.8.55",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -46,7 +46,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "15.1.6",
+    "eslint-config-next": "15.1.7",
     "postcss": "^8.5.2",
     "tailwindcss": "4",
     "typescript": "^5"
