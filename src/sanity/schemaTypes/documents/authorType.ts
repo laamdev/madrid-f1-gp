@@ -2,16 +2,18 @@ import { UserIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 
 export const authorType = defineType({
-  name: "author",
   title: "Author",
+  name: "author",
   type: "document",
   icon: UserIcon,
   fields: [
     defineField({
+      title: "Name",
       name: "name",
       type: "string",
     }),
     defineField({
+      title: "Slug",
       name: "slug",
       type: "slug",
       options: {
@@ -19,6 +21,7 @@ export const authorType = defineType({
       },
     }),
     defineField({
+      title: "Image",
       name: "image",
       type: "image",
       options: {
@@ -26,6 +29,7 @@ export const authorType = defineType({
       },
     }),
     defineField({
+      title: "Bio",
       name: "bio",
       type: "array",
       of: [

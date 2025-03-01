@@ -28,7 +28,7 @@
   --secondary-foreground: oklch(9% 0 0);
   --muted: oklch(96.1% 0 0);
   --muted-foreground: oklch(45.1% 0 0);
-  --accent: oklch(96.1% 0 0);
+  --accent: oklch(32.6% 0.21 267.17);
   --accent-foreground: oklch(9% 0 0);
   --destructive: oklch(66.16% 0.177 27.33);
   --destructive-foreground: oklch(98% 0 0);
@@ -40,7 +40,7 @@
   --chart-3: oklch(27.81% 0.051 231.14);
   --chart-4: oklch(82.09% 0.144 90.24);
   --chart-5: oklch(77.41% 0.174 48.21);
-  --radius: 0.6rem;
+  --radius: 0rem;
 }
 
 @theme inline {

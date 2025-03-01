@@ -1,16 +1,16 @@
 import { NewsletterForm } from "@/components/home/newsletter-form";
+import { SectionHeading } from "@/components/shared/section-heading";
+import { SectionBody } from "@/components/shared/section-text";
 
 export const Newsletter = () => {
   return (
-    <section className="bg-[#10069F] rounded-xl p-8 h-96 mt-4">
+    <section className="bg-accent rounded-xl p-8 mt-4">
       <div>
-        <h2 className="text-2xl font-bold uppercase font-mono text-white">
-          Stay in the know
-        </h2>
-        <p className="text-neutral-300 mt-4">
+        <SectionHeading heading="Stay in the know" isLight />
+        <SectionBody isLight>
           Sign up to our newsletter to get the latest news and updates from the
           track.
-        </p>
+        </SectionBody>
       </div>
 
       <div className="mt-4">

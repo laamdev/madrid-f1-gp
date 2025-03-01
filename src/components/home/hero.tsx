@@ -46,25 +46,22 @@ export const HomeHero = ({
         </div>
       </div>
 
-      <div className="bg-card">
-        <div className="flex justify-between">
-          <div className="flex gap-x-8 items-center px-4">
-            <h1 className="text-white text-lg uppercase font-mono font-bold">
-              {gpDetails?.name}
-            </h1>
-            <h2 className="bg-white font-serif text-slate-900 px-4 py-2 w-fit rounded-full text-sm uppercase  font-bold">
-              {dateRange}
-            </h2>
-          </div>
-          <div>
-            <CountdownTimer
-              raceDate={
-                gpDetails?.racingSchedule?.find(
-                  (event) => event.name === "race"
-                )?.startTime || new Date().toISOString()
-              }
-            />
-          </div>
+      <div className="flex flex-col sm:flex-row justify-between">
+        <div className="flex w-full bg-card py-4 sm:py-0 flex-col gap-y-4 sm:flex-row gap-x-8 sm:items-center px-4">
+          <h1 className="text-white md:text-lg uppercase font-mono font-bold">
+            {gpDetails?.name}
+          </h1>
+          <h2 className="bg-white font-serif text-slate-900 px-4 py-2 w-fit rounded-full text-sm uppercase  font-bold">
+            {dateRange}
+          </h2>
+        </div>
+        <div>
+          <CountdownTimer
+            raceDate={
+              gpDetails?.racingSchedule?.find((event) => event.name === "race")
+                ?.startTime || new Date().toISOString()
+            }
+          />
         </div>
       </div>
     </section>

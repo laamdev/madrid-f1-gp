@@ -2,16 +2,18 @@ import { DocumentIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const pageType = defineType({
-  name: "page",
   title: "Page",
+  name: "page",
   type: "document",
   icon: DocumentIcon,
   fields: [
     defineField({
+      title: "Title",
       name: "title",
       type: "string",
     }),
     defineField({
+      title: "Slug",
       name: "slug",
       type: "slug",
       options: {
@@ -19,10 +21,12 @@ export const pageType = defineType({
       },
     }),
     defineField({
+      title: "Content",
       name: "content",
       type: "pageBuilder",
     }),
     defineField({
+      title: "Main Image",
       name: "mainImage",
       type: "image",
       options: {
@@ -30,10 +34,12 @@ export const pageType = defineType({
       },
     }),
     defineField({
+      title: "SEO",
       name: "seo",
       type: "seo",
     }),
     defineField({
+      title: "Social",
       name: "social",
       type: "social",
     }),

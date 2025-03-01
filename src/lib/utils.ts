@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import dayjs from "dayjs";
 
 export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
@@ -41,4 +42,11 @@ export const formatEventTime = (startTime: string, endTime?: string) => {
     month,
     timeStr: `${timeStr} - ${endTimeStr}`,
   };
+};
+
+export const formatDate = (date: string) => {
+  const day = dayjs(date).format("ddd DD MMM");
+  const month = dayjs(date).format("MMM");
+  const full = dayjs(date).format("DD MMMM YYYY");
+  return { day, month, full };
 };

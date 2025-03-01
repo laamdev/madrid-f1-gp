@@ -4,7 +4,7 @@ import { HomeHero } from "@/components/home/hero";
 import { GPFeatures } from "@/components/home/gp-features";
 import { TrackInfo } from "@/components/home/track-info";
 import { StatsCarousel } from "@/components/home/stats-carousel";
-import { OtherEvents } from "@/components/home/other-events";
+import { Concerts } from "@/components/home/concerts";
 import { Newsletter } from "@/components/shared/newsletter";
 
 import { GP_DETAILS_QUERY } from "@/sanity/lib/queries";
@@ -25,7 +25,7 @@ export default async function HomePage() {
       <StatsCarousel trackStats={gpDetails.track || undefined} />
       <TrackInfo />
       <GPFeatures />
-      <OtherEvents />
+      <Concerts />
       <Newsletter />
     </div>
   );

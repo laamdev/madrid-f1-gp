@@ -1,14 +1,14 @@
 import { defineField, defineType } from "sanity";
-import { ControlsIcon } from "@sanity/icons";
+import { Gear } from "@phosphor-icons/react/dist/ssr";
 
 export const siteSettingsType = defineType({
   name: "siteSettings",
   title: "Site Settings",
   type: "document",
-  icon: ControlsIcon,
+  icon: Gear,
   fields: [
     defineField({
-      name: "homePage",
+      name: "aboutPage",
       type: "reference",
       to: [{ type: "page" }],
     }),

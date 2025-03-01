@@ -1,4 +1,4 @@
-import { PortableText } from "next-sanity";
+// // import { PortableText } from "next-sanity";
 import Image from "next/image";
 
 import { urlFor } from "@/sanity/lib/image";
@@ -9,29 +9,36 @@ type HeroProps = Extract<
   { _type: "hero" }
 >;
 
-export const Hero = ({ title, text, image }: HeroProps) => {
+export const Hero = ({ title, image }: HeroProps) => {
   return (
-    <section className="isolate rounded-xl w-full aspect-[2/1] py-16 relative overflow-hidden">
-      <div className="relative flex flex-col justify-center items-center gap-8 h-full z-20">
-        {title ? (
-          <h1 className="text-2xl md:text-4xl lg:text-6xl font-semibold text-white text-pretty max-w-3xl">
-            {title}
-          </h1>
-        ) : null}
-        <div className="prose-lg lg:prose-xl prose-invert flex items-center">
-          {text ? <PortableText value={text} /> : null}
+    <section className="rounded-xl overflow-hidden">
+      <div className="relative min-h-[32rem] overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src={urlFor(image!)
+              .width(1920)
+              .height(1080)
+              .quality(80)
+              .auto("format")
+              .url()}
+            alt={
+              typeof image === "string"
+                ? title || "Concert Image"
+                : "About the Madrid F1 GP."
+            }
+            fill
+            className="object-cover object-[25%_90%] bg-card"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50" />
+
+          <div className="absolute bottom-0 left-0 right-0 p-4">
+            <h1 className="text-white font-mono uppercase text-5xl font-bold">
+              {title}
+            </h1>
+          </div>
         </div>
       </div>
-      <div className="absolute inset-0 bg-pink-500 opacity-50 z-10" />
-      {image ? (
-        <Image
-          src={urlFor(image).width(1600).height(800).url()}
-          width={1600}
-          height={800}
-          alt="F1 cars racing."
-          className="absolute inset-0 object-cover blur-sm"
-        />
-      ) : null}
     </section>
   );
 };

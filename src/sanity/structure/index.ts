@@ -1,8 +1,4 @@
-import {
-  CalendarBlank,
-  MapPin,
-  Microphone,
-} from "@phosphor-icons/react/dist/ssr";
+import { MusicNote, MapPin, Microphone } from "@phosphor-icons/react/dist/ssr";
 import type { StructureResolver } from "sanity/structure";
 
 export const structure: StructureResolver = (S) =>
@@ -33,7 +29,7 @@ export const structure: StructureResolver = (S) =>
       S.listItem()
         .title("Internal Concerts")
         .schemaType("concert")
-        .icon(CalendarBlank)
+        .icon(MusicNote)
         .child(
           S.documentList()
             .title("Internal Concerts")
@@ -42,7 +38,7 @@ export const structure: StructureResolver = (S) =>
       S.listItem()
         .title("External Concerts")
         .schemaType("concert")
-        .icon(CalendarBlank)
+        .icon(MusicNote)
         .child(
           S.documentList()
             .title("External Concerts")

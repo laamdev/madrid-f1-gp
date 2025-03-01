@@ -31,10 +31,13 @@ export const StatsCarousel = ({
     >
       <CarouselContent>
         {trackStats?.map((stat, index) => (
-          <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/6">
+          <CarouselItem
+            key={index}
+            className="basis-1/2 md:basis-1/2 lg:basis-1/6"
+          >
             <div className="p-1">
               <Card className="bg-white">
-                <CardContent className="flex items-center flex-col gap-y-2 aspect-[5/3] justify-center p-6">
+                <CardContent className="flex items-center flex-col gap-y-2 sm:aspect-[5/3] justify-center p-6">
                   <span>
                     <span className="text-black font-mono text-lg font-semibold">
                       {formatNumber(stat.value!)}

@@ -11,6 +11,7 @@ import { concertType } from "./documents/concertType";
 import { artistType } from "./documents/artistType";
 import { venueType } from "./documents/venueType";
 import { redirectType } from "./documents/redirectType";
+import { ticketType } from "./documents/ticketType";
 import { stageType } from "./objects/stageType";
 // Singletons
 import { siteSettingsType } from "./singletons/siteSettingsType";
@@ -20,6 +21,8 @@ import { blockContentType } from "./objects/blockContentType";
 import { seoType } from "./objects/seoType";
 import { socialType } from "./objects/socialType";
 import { raceEventType } from "./objects/reaceEventType";
+import { ticketPriceType } from "./objects/ticketPriceType";
+import { ticketOptionType } from "./objects/ticketOptionType";
 // Blocks
 import { heroType } from "./blocks/heroType";
 import { splitImageType } from "./blocks/splitImageType";
@@ -51,5 +54,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     artistType,
     venueType,
     stageType,
+    ticketType,
+    ticketPriceType,
+    ticketOptionType,
   ],
 };

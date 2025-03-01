@@ -174,3 +174,19 @@ export const CONCERT_BY_SLUG_QUERY =
   },
   "isUpcoming": true
 }`);
+
+export const TICKETS_QUERY = defineQuery(`*[_type == "ticketType"] {
+  _id,
+  name,
+  "slug": slug.current,
+  description,
+  image,
+  options[]->{
+    _id,
+    duration,
+    prices[]->{
+      _id,
+      price
+    }
+  }
+}`);

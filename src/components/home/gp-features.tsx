@@ -3,23 +3,25 @@
 import Image from "next/image";
 import { motion } from "motion/react";
 
+import { SectionHeading } from "@/components/shared/section-heading";
+import { SectionBody } from "@/components/shared/section-text";
+import { TextWrapper } from "@/components/shared/text-wrapper";
+import { CTALink } from "@/components/shared/cta-link";
+
 export const GPFeatures = () => {
   return (
-    <div className="flex mt-16 flex-col items-center justify-center mx-auto max-w-5xl">
-      <div>
-        <h2 className="text-2xl font-mono uppercase font-bold">
-          Welcoming a new F1 generation
-        </h2>
-        <p className="text-lg text-neutral-700 text-center mt-4">
-          High-octane days, epic nights. After 45 years, Formula 1 returns to
-          Madrid for a 4-day festival unlike any other. Where speed meets sound,
-          and history is made once again. Explore our 2026 ticket options and be
-          part of the unforgettable return of the Madrid Grand Prix.
-        </p>
-      </div>
+    <div className="flex my-16 flex-col items-center justify-center mx-auto max-w-5xl">
+      <TextWrapper>
+        <SectionHeading heading="Welcoming a new F1 generation" isCentered />
+        <SectionBody isCentered>
+          {`Madrid is set to become a game-changer in Formula 1! With a thrilling new circuit, cutting-edge sustainability, and unbeatable access in the heart of Spain's capital, this race is set to deliver high-speed action like never before.`}
+        </SectionBody>
+        <CTALink href="/about" text="Discover More" isCentered />
+      </TextWrapper>
       <motion.div
         initial={{ x: "-100%" }}
-        animate={{ x: "0%" }}
+        whileInView={{ x: "0%" }}
+        viewport={{ once: true }}
         transition={{
           duration: 1.5,
           ease: "easeOut",
