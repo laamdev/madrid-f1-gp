@@ -13,6 +13,7 @@ import { defaultDocumentNode } from "./src/sanity/structure/defaultDocumentNode"
 
 export default defineConfig({
   basePath: "/studio",
+  title: "MADGP Studio",
   projectId,
   dataset,
   schema,
