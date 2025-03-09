@@ -68,19 +68,26 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type TicketOption = {
+  _type: "ticketOption";
+  duration?: "thursday" | "thursday-evening" | "friday" | "saturday" | "sunday" | "3-day" | "4-day";
+  prices?: Array<{
+    _key: string;
+  } & TicketPrice>;
+};
+
 export type TicketPrice = {
   _type: "ticketPrice";
-  duration?: "thursday" | "thursday-evening" | "friday" | "saturday" | "sunday" | "3-day" | "4-day";
   price?: number;
+  isEarlyBird?: boolean;
   availableFrom?: string;
   availableUntil?: string;
-  isEarlyBird?: boolean;
   maxQuantity?: number;
 };
 
-export type TicketType = {
+export type Ticket = {
   _id: string;
-  _type: "ticketType";
+  _type: "ticket";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -88,9 +95,9 @@ export type TicketType = {
   slug?: Slug;
   description?: string;
   features?: Array<string>;
-  prices?: Array<{
+  options?: Array<{
     _key: string;
-  } & TicketPrice>;
+  } & TicketOption>;
   image?: {
     asset?: {
       _ref: string;
@@ -717,7 +724,7 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | TicketPrice | TicketType | Artist | RaceEvent | Concert | Stage | Venue | Stat | GpDetails | Redirect | SiteSettings | PageBuilder | Faq | Faqs | Features | SplitImage | Hero | Page | Social | Seo | Article | Author | Category | Slug | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | TicketOption | TicketPrice | Ticket | Artist | RaceEvent | Concert | Stage | Venue | Stat | GpDetails | Redirect | SiteSettings | PageBuilder | Faq | Faqs | Features | SplitImage | Hero | Page | Social | Seo | Article | Author | Category | Slug | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: PAGE_QUERY
@@ -1216,6 +1223,30 @@ export type CONCERT_BY_SLUG_QUERYResult = {
   headline: null;
   isUpcoming: true;
 } | null;
+// Variable: TICKETS_QUERY
+// Query: *[_type == "ticket"] {  _id,  name,  "slug": slug.current,  description,  image,  features[],  options[]}
+export type TICKETS_QUERYResult = Array<{
+  _id: string;
+  name: string | null;
+  slug: string | null;
+  description: string | null;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  features: Array<string> | null;
+  options: Array<{
+    _key: string;
+  } & TicketOption> | null;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -1233,5 +1264,6 @@ declare module "@sanity/client" {
     "*[\n  _type == \"concert\"\n  && location == \"internal\"\n  && date > now() \n] | order(date asc) {\n  _id,\n  name,\n  \"slug\": slug.current,\n  image,\n  location,\n  stage->{\n    name\n  },\n  venue->,\n  date,\n  headline->{\n    name\n  },\n  \"isUpcoming\": true\n}": CONCERTS_QUERYResult;
     "*[_type == \"gpDetails\"][0]{\n  racingSchedule[]\n}": SCHEDULE_QUERYResult;
     "*[_type == \"concert\" && slug.current == $slug][0]{\n  _id,\n  name,\n  \"slug\": slug.current,\n  image,\n  location,\n  stage->{\n    name\n  },\n  venue->,\n  date,\n  headline->{\n    name\n  },\n  \"isUpcoming\": true\n}": CONCERT_BY_SLUG_QUERYResult;
+    "*[_type == \"ticket\"] {\n  _id,\n  name,\n  \"slug\": slug.current,\n  description,\n  image,\n  features[],\n  options[]\n}": TICKETS_QUERYResult;
   }
 }

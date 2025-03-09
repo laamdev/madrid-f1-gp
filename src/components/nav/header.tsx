@@ -1,18 +1,37 @@
+"use client";
+import { useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { useScroll, motion, useTransform } from "motion/react";
 
 export const Header = () => {
+  const ref = useRef(null);
+  const { scrollY } = useScroll();
+
+  // Transform the margin-top value based on scroll position
+  // Start with 8 (mt-8) and reduce to 4 (mt-4) as user scrolls down
+  const marginTop = useTransform(
+    scrollY,
+    [0, 100], // scroll values (0px to 100px)
+    ["2rem", "1rem"] // corresponding margin values (8 to 4)
+  );
+
   return (
-    <div className="fixed top-0 left-0 right-0 z-20 bg-white/70 p-4 backdrop-blur-md mx-8 rounded-xl border border-white/20 mt-8">
-      <header className="flex font-bold text-slate-700 text-base uppercase font-serif items-center justify-between mx-auto">
-        <Link href="/" className="relative aspect-video h-16">
-          <Image
-            src="/images/gp-logo.webp"
-            alt="2025 F1 Spanish Grand Prix logo."
-            fill
-          />
+    <motion.div
+      ref={ref}
+      className="fixed top-0 left-0 right-0 z-20 bg-white/70 p-4 backdrop-blur-md mx-8 rounded-xl border border-white/20"
+      style={{
+        marginTop,
+      }}
+    >
+      <header className="flex items-center justify-between mx-auto">
+        <Link
+          href="/"
+          className="relative font-mono font-black flex items-center uppercase"
+        >
+          <span className="text-red-600">{`Mad`}</span>
+          <span className="text-sm">{`GP`}</span>
         </Link>
-        <ul className="flex items-center gap-4">
+        <ul className="flex items-center text-slate-700 gap-8 text-base font-medium">
           <li>
             <Link
               className="hover:text-accent transition-colors"
@@ -49,6 +68,6 @@ export const Header = () => {
           </li>
         </ul>
       </header>
-    </div>
+    </motion.div>
   );
 };

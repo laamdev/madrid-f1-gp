@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { format } from "date-fns";
 
 import { CountdownTimer } from "@/components/home/countdown-timer";
 
@@ -16,21 +17,7 @@ export const HomeHero = ({
   const firstDay = sortedDates![0];
   const lastDay = sortedDates![sortedDates!.length - 1];
 
-  const formatDate = (date: Date) => {
-    return new Intl.DateTimeFormat("en-GB", {
-      day: "2-digit",
-    }).format(date);
-  };
-
-  const formatMonth = (date: Date) => {
-    return new Intl.DateTimeFormat("en-GB", {
-      month: "long",
-    })
-      .format(date)
-      .toUpperCase();
-  };
-
-  const dateRange = `${formatDate(firstDay)} - ${formatDate(lastDay)} ${formatMonth(firstDay)}`;
+  const dateRange = `${format(firstDay, "dd")} - ${format(lastDay, "dd")} ${format(firstDay, "MMM").toUpperCase()}`;
 
   return (
     <section className="rounded-xl overflow-hidden">

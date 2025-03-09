@@ -326,7 +326,7 @@
     }
   },
   {
-    "name": "ticketPrice",
+    "name": "ticketOption",
     "type": "type",
     "value": {
       "type": "object",
@@ -335,7 +335,7 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
-            "value": "ticketPrice"
+            "value": "ticketOption"
           }
         },
         "duration": {
@@ -375,10 +375,55 @@
           },
           "optional": true
         },
+        "prices": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "array",
+            "of": {
+              "type": "object",
+              "attributes": {
+                "_key": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "rest": {
+                "type": "inline",
+                "name": "ticketPrice"
+              }
+            }
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "ticketPrice",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "ticketPrice"
+          }
+        },
         "price": {
           "type": "objectAttribute",
           "value": {
             "type": "number"
+          },
+          "optional": true
+        },
+        "isEarlyBird": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
           },
           "optional": true
         },
@@ -396,13 +441,6 @@
           },
           "optional": true
         },
-        "isEarlyBird": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": true
-        },
         "maxQuantity": {
           "type": "objectAttribute",
           "value": {
@@ -414,7 +452,7 @@
     }
   },
   {
-    "name": "ticketType",
+    "name": "ticket",
     "type": "document",
     "attributes": {
       "_id": {
@@ -427,7 +465,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "string",
-          "value": "ticketType"
+          "value": "ticket"
         }
       },
       "_createdAt": {
@@ -480,7 +518,7 @@
         },
         "optional": true
       },
-      "prices": {
+      "options": {
         "type": "objectAttribute",
         "value": {
           "type": "array",
@@ -496,7 +534,7 @@
             },
             "rest": {
               "type": "inline",
-              "name": "ticketPrice"
+              "name": "ticketOption"
             }
           }
         },

@@ -3,7 +3,7 @@ import { Ticket } from "@phosphor-icons/react/dist/ssr";
 
 export const ticketType = defineType({
   title: "Ticket",
-  name: "ticketType",
+  name: "ticket",
   type: "document",
   icon: Ticket,
   fields: [

@@ -1,10 +1,15 @@
 import { defineField, defineType } from "sanity";
 import { Calendar } from "@phosphor-icons/react/dist/ssr";
 
-interface TicketPrice {
-  price: number;
-  isEarlyBird?: boolean;
-}
+// // interface TicketPricePreview {
+// //   price: number;
+// //   isEarlyBird?: boolean;
+// // }
+
+// // interface PreviewSelection {
+// //   duration: string;
+// //   prices: TicketPricePreview[];
+// // }
 
 export const ticketOptionType = defineType({
   title: "Ticket Option",
@@ -39,48 +44,41 @@ export const ticketOptionType = defineType({
       validation: (Rule) => Rule.required().min(1),
     }),
   ],
-  preview: {
-    select: {
-      duration: "duration",
-      prices: "prices",
-    },
-    prepare({
-      duration,
-      prices = [],
-    }: {
-      duration: string;
-      prices: TicketPrice[];
-    }) {
-      const durationNames = {
-        thursday: "Thursday",
-        "thursday-evening": "Thursday Evening",
-        friday: "Friday",
-        saturday: "Saturday",
-        sunday: "Sunday",
-        "3-day": "3-Day Pass",
-        "4-day": "4-Day Pass",
-      };
+  // // preview: {
+  // //   select: {
+  // //     duration: "duration",
+  // //     prices: "prices",
+  // //   },
+  // //   prepare(selection: PreviewSelection) {
+  // //     const { duration, prices = [] } = selection;
+  // //     const durationNames = {
+  // //       thursday: "Thursday",
+  // //       "thursday-evening": "Thursday Evening",
+  // //       friday: "Friday",
+  // //       saturday: "Saturday",
+  // //       sunday: "Sunday",
+  // //       "3-day": "3-Day Pass",
+  // //       "4-day": "4-Day Pass",
+  // //     };
 
-      let priceDisplay = "No prices set";
-      if (prices.length === 1) {
-        // If there's only one price, show it with early bird indicator if applicable
-        const price = prices[0];
-        priceDisplay = `€${price.price}${price.isEarlyBird ? " (Early Bird)" : ""}`;
-      } else if (prices.length > 1) {
-        // If there are multiple prices, show the range
-        const minPrice = Math.min(...prices.map((p) => p.price));
-        const maxPrice = Math.max(...prices.map((p) => p.price));
-        priceDisplay =
-          minPrice === maxPrice
-            ? `€${minPrice}`
-            : `€${minPrice} - €${maxPrice}`;
-      }
+  // //     let priceDisplay = "No prices set";
+  // //     if (prices.length === 1) {
+  // //       const price = prices[0];
+  // //       priceDisplay = `€${price.price}${price.isEarlyBird ? " (Early Bird)" : ""}`;
+  // //     } else if (prices.length > 1) {
+  // //       const minPrice = Math.min(...prices.map((p) => p.price));
+  // //       const maxPrice = Math.max(...prices.map((p) => p.price));
+  // //       priceDisplay =
+  // //         minPrice === maxPrice
+  // //           ? `€${minPrice}`
+  // //           : `€${minPrice} - €${maxPrice}`;
+  // //     }
 
-      return {
-        title:
-          durationNames[duration as keyof typeof durationNames] || duration,
-        subtitle: priceDisplay,
-      };
-    },
-  },
+  // //     return {
+  // //       title:
+  // //         durationNames[duration as keyof typeof durationNames] || duration,
+  // //       subtitle: priceDisplay,
+  // //     };
+  // //   },
+  // // },
 });

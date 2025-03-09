@@ -6,7 +6,11 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "manifest": "sanity manifest extract --path public/studio/static && next build",
+    "predev": "bun run typegen && bun run manifest",
+    "prebuild": "bun run typegen && bun run manifest",
+    "typegen": "sanity schema extract --path=./src/sanity/extract.json && sanity typegen generate"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.7",
@@ -19,6 +23,7 @@
     "@tailwindcss/postcss": "4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
     "embla-carousel-auto-scroll": "^8.5.2",
     "embla-carousel-react": "^8.5.2",
